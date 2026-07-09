@@ -6,6 +6,11 @@ on:
       - 'extension-files/bringweb3-sdk/**'
     branches:
       - "**"
+  pull_request:
+    paths:
+      - 'extension-files/bringweb3-sdk/**'
+      - 'extension-files/test-extension/**'
+      - '.github/workflows/main.yml'
 
 jobs:
   build:
@@ -14,13 +19,19 @@ jobs:
       run:
         working-directory: extension-files/bringweb3-sdk
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 'lts/*'
           cache: "yarn"
           cache-dependency-path: '**/yarn.lock'
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-      - name: Lint and build package
-        run: yarn lint && yarn build
+      - name: Lint and smoke test package
+        run: yarn lint && yarn test:smoke
+      - name: Install mock extension dependencies
+        working-directory: extension-files/test-extension
+        run: yarn install --frozen-lockfile
+      - name: Build mock extension
+        working-directory: extension-files/test-extension
+        run: yarn build
