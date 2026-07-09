@@ -4,8 +4,13 @@ on:
   push:
     paths:
       - 'extension-files/bringweb3-sdk/**'
+      - 'extension-files/test-extension/**'
     branches:
       - "**"
+  pull_request:
+    paths:
+      - 'extension-files/bringweb3-sdk/**'
+      - 'extension-files/test-extension/**'
 
 jobs:
   build:
@@ -22,5 +27,11 @@ jobs:
           cache-dependency-path: '**/yarn.lock'
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-      - name: Lint and build package
-        run: yarn lint && yarn build
+      - name: Lint and smoke test package
+        run: yarn lint && yarn test:smoke
+      - name: Install mock extension dependencies
+        working-directory: extension-files/test-extension
+        run: yarn install --frozen-lockfile
+      - name: Build mock extension
+        working-directory: extension-files/test-extension
+        run: yarn build
