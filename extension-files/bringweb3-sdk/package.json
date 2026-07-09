@@ -16,11 +16,12 @@
   },
   "scripts": {
     "watch": "tsup index.ts --env.IFRAME_URL=http://localhost:5173 --env.ENDPOINT=dev --env.VERSION=1.5.0 --format cjs,esm --dts --watch",
+    "prebuild": "node scripts/ensure-dist.js",
     "build": "tsup index.ts --format cjs,esm --dts --minify",
     "build:dev": "tsup index.ts --format cjs,esm --dts --minify --env.ENDPOINT=dev --env.VERSION=1.5.0",
     "lint": "tsc",
     "test": "vitest run --coverage",
-    "test:smoke": "yarn build && SMOKE_BUILT_PACKAGE=true vitest run --coverage=false",
+    "test:smoke": "yarn build && node scripts/run-smoke.js",
     "release": "yarn build && changeset publish"
   },
   "files": [
