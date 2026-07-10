@@ -12,7 +12,7 @@
     "dev": "vite",
     "dev:versioned": "VITE_BASE_PATH=/v1.4.3/ vite",
     "build": "tsc -b && vite build",
-    "lint": "tsc -b --pretty false",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "validate:config": "node scripts/validate-config.cjs",
     "test": "yarn validate:config",

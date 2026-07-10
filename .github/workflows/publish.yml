@@ -22,12 +22,12 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Debug directory structure
         run: |
           pwd
           ls -la
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'yarn'
@@ -41,7 +41,7 @@ jobs:
 
       - name: Create Release Pull Request or Publish
         id: changesets
-        uses: changesets/action@v1.4.9
+        uses: changesets/action@57dd5be9ba8852146913fabe3c122b219bb90fa2 # v1.4.9
         with:
           publish: yarn release
           cwd: "${{ github.workspace }}/extension-files/bringweb3-sdk"

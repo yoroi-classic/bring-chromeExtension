@@ -6,7 +6,7 @@ const path = require('path');
 const appRoot = path.resolve(__dirname, '..');
 const packageJson = JSON.parse(fs.readFileSync(path.join(appRoot, 'package.json'), 'utf8'));
 const tsconfig = JSON.parse(fs.readFileSync(path.join(appRoot, 'tsconfig.json'), 'utf8'));
-const viteConfig = fs.readFileSync(path.join(appRoot, 'vite.config.ts'), 'utf8');
+const viteConfigPath = path.join(appRoot, 'vite.config.ts');
 const legacyOwnerPattern = new RegExp(['em', 'urgo'].join(''), 'i');
 
 const fail = message => {
@@ -37,16 +37,43 @@ for (const reference of ['./tsconfig.app.json', './tsconfig.node.json']) {
   }
 }
 
-if (!viteConfig.includes("base: process.env.VITE_BASE_PATH || '/'")) {
-  fail('vite config must preserve VITE_BASE_PATH with / fallback');
-}
-
 if (!fs.existsSync(path.join(appRoot, 'index.html'))) {
   fail('index.html must exist for Vite builds');
 }
 
-if (process.exitCode) {
-  process.exit(process.exitCode);
-}
+const validateViteBasePath = async () => {
+  const originalBasePath = process.env.VITE_BASE_PATH;
+  const expectedBasePath = '/validation-base/';
 
-console.log('Iframe package config is valid.');
+  process.env.VITE_BASE_PATH = expectedBasePath;
+  try {
+    const { loadConfigFromFile } = await import('vite');
+    const result = await loadConfigFromFile(
+      { command: 'build', mode: 'production' },
+      viteConfigPath
+    );
+
+    expectEqual(result?.config?.base, expectedBasePath, 'Vite base path');
+  } catch (error) {
+    fail(`could not load Vite config: ${error.message}`);
+  } finally {
+    if (originalBasePath === undefined) {
+      delete process.env.VITE_BASE_PATH;
+    } else {
+      process.env.VITE_BASE_PATH = originalBasePath;
+    }
+  }
+};
+
+validateViteBasePath()
+  .then(() => {
+    if (process.exitCode) {
+      process.exit(process.exitCode);
+    }
+
+    console.log('Iframe package config is valid.');
+  })
+  .catch(error => {
+    fail(`unexpected validation failure: ${error.message}`);
+    process.exit(process.exitCode);
+  });
