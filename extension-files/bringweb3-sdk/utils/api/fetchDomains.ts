@@ -8,7 +8,7 @@ const fetchDomains = async (trigger?: string | null) => {
     // ***** IMPORTANT BEGIN ***** //
 
     if ((whitelistEndpoint?.trim().length ?? 0) < 1) {
-        // Missing whitelist data must fail closed.
+        // Missing whitelist endpoint configuration must fail closed.
         throw new Error('Cashback redirection whitelist endpoint is required!');
     }
 
