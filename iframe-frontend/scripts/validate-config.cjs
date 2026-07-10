@@ -20,6 +20,14 @@ const expectEqual = (actual, expected, label) => {
   }
 };
 
+const formatError = error => {
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return String(error);
+};
+
 expectEqual(packageJson.name, 'iframe-frontend', 'package name');
 expectEqual(packageJson.private, true, 'private package flag');
 expectEqual(packageJson.packageManager, 'yarn@1.22.22', 'package manager');
@@ -41,11 +49,15 @@ if (!fs.existsSync(path.join(appRoot, 'index.html'))) {
   fail('index.html must exist for Vite builds');
 }
 
-const validateViteBasePath = async () => {
+const loadViteBasePath = async (basePath, expectedBasePath, label) => {
   const originalBasePath = process.env.VITE_BASE_PATH;
-  const expectedBasePath = '/validation-base/';
 
-  process.env.VITE_BASE_PATH = expectedBasePath;
+  if (basePath === undefined) {
+    delete process.env.VITE_BASE_PATH;
+  } else {
+    process.env.VITE_BASE_PATH = basePath;
+  }
+
   try {
     const { loadConfigFromFile } = await import('vite');
     const result = await loadConfigFromFile(
@@ -53,9 +65,9 @@ const validateViteBasePath = async () => {
       viteConfigPath
     );
 
-    expectEqual(result?.config?.base, expectedBasePath, 'Vite base path');
+    expectEqual(result?.config?.base, expectedBasePath, label);
   } catch (error) {
-    fail(`could not load Vite config: ${error.message}`);
+    fail(`could not load Vite config: ${formatError(error)}`);
   } finally {
     if (originalBasePath === undefined) {
       delete process.env.VITE_BASE_PATH;
@@ -63,6 +75,11 @@ const validateViteBasePath = async () => {
       process.env.VITE_BASE_PATH = originalBasePath;
     }
   }
+};
+
+const validateViteBasePath = async () => {
+  await loadViteBasePath(undefined, '/', 'Vite default base path');
+  await loadViteBasePath('/validation-base/', '/validation-base/', 'Vite configured base path');
 };
 
 validateViteBasePath()
@@ -74,6 +91,6 @@ validateViteBasePath()
     console.log('Iframe package config is valid.');
   })
   .catch(error => {
-    fail(`unexpected validation failure: ${error.message}`);
+    fail(`unexpected validation failure: ${formatError(error)}`);
     process.exit(process.exitCode);
   });
