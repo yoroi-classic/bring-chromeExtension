@@ -54,10 +54,12 @@ describe('extension kit package smoke', () => {
     })
 
     it('points active package metadata at the owned repository', () => {
+        expect(packageJson.name).toBe(packageSpecifier)
         expect(packageJson.repository).toEqual({
             type: 'git',
             url: 'https://github.com/yoroi-classic/bring-chromeExtension',
         })
+        expect(JSON.stringify(packageJson)).not.toMatch(new RegExp(['em', 'urgo'].join(''), 'i'))
         expect(packageJson.main).toBe('dist/index.js')
         expect(packageJson.module).toBe('dist/index.mjs')
         expect(packageJson.types).toBe('dist/index.d.ts')

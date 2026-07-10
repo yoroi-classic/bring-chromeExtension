@@ -11,6 +11,9 @@ permissions:
   contents: write
   pull-requests: write
 
+env:
+  NODE_VERSION: '22'
+
 defaults:
   run:
     working-directory: extension-files/bringweb3-sdk
@@ -26,9 +29,12 @@ jobs:
           ls -la
       - uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'yarn'
           cache-dependency-path: 'extension-files/bringweb3-sdk/yarn.lock'
+
+      - name: Enable Corepack
+        run: corepack enable
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile

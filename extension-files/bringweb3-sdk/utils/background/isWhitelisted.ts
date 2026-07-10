@@ -11,7 +11,7 @@ const isWhitelisted = async (url: string): Promise<boolean> => {
         // ***** IMPORTANT BEGIN ***** //
 
         if ((whitelistEndpoint?.trim().length ?? 0) < 1) {
-            // This is local EMURGO change we do not allow there to be a version with no whitelist
+            // Keep whitelist enforcement explicit so missing data cannot allow all domains.
             throw new Error('Cashback redirection whitelist endpoint is required!');
         }
 
@@ -27,9 +27,8 @@ const isWhitelisted = async (url: string): Promise<boolean> => {
         // ***** IMPORTANT BEGIN ***** //
 
         /*
-         This is an EMURGO local change
-         to add a comment around the
-         whitelist presence check
+         Keep this comment close to the
+         whitelist presence check.
          */
 
         // THIS MUST NOT CHANGE!
@@ -42,9 +41,8 @@ const isWhitelisted = async (url: string): Promise<boolean> => {
          is present or not, to consider
          a missing whitelist a true or false.
 
-         We have been locally changing
-         no whitelist to always be false response. Not it has changed to be
-         so by library default as well.
+         Missing whitelist data must always
+         return false by default.
 
          If this behavior ever changes
          it needs to be carefully reviewed
