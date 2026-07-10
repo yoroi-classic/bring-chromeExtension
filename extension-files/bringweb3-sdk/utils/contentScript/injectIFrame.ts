@@ -29,13 +29,7 @@ const injectIFrame = ({ query, theme, themeMode, text, iframeUrl, page, switchWa
 
     // ***** IMPORTANT BEGIN ***** //
 
-    /*
-     This is an Emurgo specific change
-     to add a comment around setting
-     the sandbox attribute on the iframe.
-     */
-
-    // NOTE THIS PART MUST NOT CHANGE!
+    // Keep the iframe sandbox restricted so it cannot redirect the top frame.
     iframe.setAttribute('sandbox', "allow-scripts allow-same-origin");
 
     /*
@@ -52,8 +46,7 @@ const injectIFrame = ({ query, theme, themeMode, text, iframeUrl, page, switchWa
      Now iframe is only given two permissions:
      scripts and same-origin.
 
-     If this EVER changes. There needs to be
-     a critically important reason for it.
+     Any future permission expansion needs careful review.
      */
 
     // ***** IMPORTANT END ***** //
