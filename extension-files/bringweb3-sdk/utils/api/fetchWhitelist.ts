@@ -8,7 +8,8 @@ export const fetchWhitelist = async () => {
         // ***** IMPORTANT BEGIN ***** //
 
         if ((whitelistEndpoint?.trim().length ?? 0) < 1) {
-            // Missing whitelist data must fail closed.
+            // Local divergence from upstream Bringweb3: missing whitelist data must fail closed.
+            // Preserve this guard when syncing upstream.
             throw new Error('Cashback redirection whitelist endpoint is required!');
         }
 
