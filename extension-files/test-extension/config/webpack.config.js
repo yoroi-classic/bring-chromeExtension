@@ -21,7 +21,7 @@ const config = merge(common, {
   },
   resolve: {
     alias: {
-      '@bringweb3/chrome-extension-kit': path.resolve(__dirname, '../../bringweb3-sdk/dist/index.js'),
+      '@yoroi-classic/bringweb3-chrome-extension-kit': path.resolve(__dirname, '../../bringweb3-sdk/dist/index.js'),
     },
   },
   plugins: [

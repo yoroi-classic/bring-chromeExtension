@@ -8,7 +8,8 @@ const fetchDomains = async (trigger?: string | null) => {
     // ***** IMPORTANT BEGIN ***** //
 
     if ((whitelistEndpoint?.trim().length ?? 0) < 1) {
-        // Keep whitelist enforcement explicit so missing data cannot allow all domains.
+        // Local divergence from upstream Bringweb3: missing whitelist data must fail closed.
+        // Preserve this guard when syncing upstream.
         throw new Error('Cashback redirection whitelist endpoint is required!');
     }
 

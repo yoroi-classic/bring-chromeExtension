@@ -9,7 +9,7 @@ import manifestJson from '../../test-extension/public/manifest.json'
 
 const packageRoot = process.cwd()
 const testExtensionRoot = path.resolve(packageRoot, '../test-extension')
-const packageSpecifier = '@bringweb3/chrome-extension-kit'
+const packageSpecifier = '@yoroi-classic/bringweb3-chrome-extension-kit'
 const expectedExports = [
     'bringInitBackground',
     'bringInitContentScript',

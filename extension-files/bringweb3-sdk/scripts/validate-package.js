@@ -6,6 +6,7 @@ const path = require('path');
 const packageRoot = path.resolve(__dirname, '..');
 const packageJsonPath = path.join(packageRoot, 'package.json');
 const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+// Keep the legacy owner token split so this guard does not trip repo-wide ownership scans itself.
 const legacyOwnerPattern = new RegExp(['em', 'urgo'].join(''), 'i');
 
 const fail = message => {
@@ -19,7 +20,7 @@ const expectEqual = (actual, expected, label) => {
   }
 };
 
-expectEqual(packageJson.name, '@bringweb3/chrome-extension-kit', 'package name');
+expectEqual(packageJson.name, '@yoroi-classic/bringweb3-chrome-extension-kit', 'package name');
 expectEqual(packageJson.packageManager, 'yarn@1.22.22', 'package manager');
 expectEqual(packageJson.engines?.node, '>=22 <25', 'Node engine');
 expectEqual(packageJson.engines?.yarn, '>=1.22.22 <2', 'Yarn engine');
