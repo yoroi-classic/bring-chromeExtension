@@ -28,8 +28,8 @@ When a user visits supported online retailer websites, the Crypto Cashback syste
 
 ## Prerequisites
 
-- Node.js >= 14
-- Chrome extension manifest >= V2 with required permissions
+- Node.js 22 LTS
+- Chrome extension manifest V3 with required permissions
 - Obtain an identifier key from [Bringweb3](https://bringweb3.io/#contact)
 - Provide a specific logo for the specific outlet
 

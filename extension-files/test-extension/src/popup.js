@@ -1,4 +1,4 @@
-import { getTurnOff, setTurnOff, getPopupEnabled, setPopupEnabled } from "@bringweb3/chrome-extension-kit";
+import { getTurnOff, setTurnOff, getPopupEnabled, setPopupEnabled } from "@yoroi-classic/bringweb3-chrome-extension-kit";
 
 const optOutOff = document.querySelector("#false");
 const optOutOn = document.querySelector("#true");

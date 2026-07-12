@@ -5,6 +5,11 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "packageManager": "yarn@1.22.22",
+  "engines": {
+    "node": ">=22 <25",
+    "yarn": ">=1.22.22 <2"
+  },
   "license": "MIT",
   "private": false,
   "publishConfig": {
@@ -20,8 +25,10 @@
     "build": "tsup index.ts --format cjs,esm --dts --minify",
     "build:dev": "tsup index.ts --format cjs,esm --dts --minify --env.ENDPOINT=dev --env.VERSION=1.5.0",
     "lint": "tsc",
+    "validate:package": "node scripts/validate-package.js",
     "test": "vitest run --coverage",
-    "test:smoke": "yarn build && node scripts/run-smoke.js",
+    "test:smoke": "yarn validate:package && yarn build && node scripts/run-smoke.js",
+    "verify": "yarn lint && yarn test:smoke",
     "release": "yarn build && changeset publish"
   },
   "files": [

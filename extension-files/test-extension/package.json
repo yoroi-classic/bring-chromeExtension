@@ -3,9 +3,16 @@
   "version": "0.1.0",
   "description": "Mock extension for the bringweb3-sdk",
   "private": true,
+  "packageManager": "yarn@1.22.22",
+  "engines": {
+    "node": ">=22 <25",
+    "yarn": ">=1.22.22 <2"
+  },
   "scripts": {
     "watch": "node ./scripts/webpack-with-env.js --mode=development --watch --config config/webpack.config.js",
-    "build": "node ./scripts/webpack-with-env.js --mode=production --config config/webpack.config.js"
+    "build": "node ./scripts/webpack-with-env.js --mode=production --config config/webpack.config.js",
+    "validate:manifest": "node scripts/validate-manifest.js",
+    "verify": "yarn validate:manifest && yarn build"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^6.4.1",
