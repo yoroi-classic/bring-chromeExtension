@@ -27,6 +27,12 @@ const isWhitelisted = async (url: string): Promise<boolean> => {
 
         // ***** IMPORTANT BEGIN ***** //
 
+        /*
+         Local divergence from upstream Bringweb3: a missing whitelist must fail closed,
+         so every domain is forbidden rather than allowed. Preserve this guard when syncing upstream.
+         */
+
+        // THIS MUST NOT CHANGE!
         // No whitelist present means all domains are FORBIDDEN by default
         if (!whitelist?.length) return false
 
