@@ -28,8 +28,8 @@ const isWhitelisted = async (url: string): Promise<boolean> => {
         // ***** IMPORTANT BEGIN ***** //
 
         /*
-         Keep this comment close to the
-         whitelist presence check.
+         Local divergence from upstream Bringweb3: a missing whitelist must fail closed,
+         so every domain is forbidden rather than allowed. Preserve this guard when syncing upstream.
          */
 
         // THIS MUST NOT CHANGE!
@@ -42,12 +42,9 @@ const isWhitelisted = async (url: string): Promise<boolean> => {
          is present or not, to consider
          a missing whitelist a true or false.
 
-         Missing whitelist data must always
-         return false by default.
+         A missing whitelist must always return false. This is now the library
+         default, but any future behavior change needs careful review.
 
-         If this behavior ever changes
-         it needs to be carefully reviewed
-         and there needs to be a good reason for it.
          */
 
           // ***** IMPORTANT END ***** //
