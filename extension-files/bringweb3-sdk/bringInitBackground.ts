@@ -62,7 +62,8 @@ const bringInitBackground = async ({ identifier, apiEndpoint, cashbackPagePath, 
     // ***** IMPORTANT BEGIN ***** //
 
     if ((whitelistEndpoint?.trim().length ?? 0) < 1) {
-        // This is local EMURGO change we do not allow there to be a version with no whitelist
+        // Local divergence from upstream Bringweb3: missing whitelist data must fail closed.
+        // Preserve this guard when syncing upstream.
         throw new Error('Cashback redirection whitelist endpoint is required!');
     }
 

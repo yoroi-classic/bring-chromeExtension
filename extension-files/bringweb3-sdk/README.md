@@ -1,6 +1,6 @@
 <a href="https://bringweb3.io/"><img width="200px" src="https://bringweb3.io/wp-content/uploads/2024/05/logo-trans_black.png"/></a><br>
 <br><br>
-<h1>@bringweb3/chrome-extension-kit</h1>
+<h1>@yoroi-classic/bringweb3-chrome-extension-kit</h1>
 <br><br>
 
 ## Table of content
@@ -28,8 +28,8 @@ When a user visits supported online retailer websites, the Crypto Cashback syste
 
 ## Prerequisites
 
-- Node.js >= 14
-- Chrome extension manifest >= V2 with required permissions
+- Node.js 22 LTS
+- Chrome extension manifest V3 with required permissions
 - Obtain an identifier key from [Bringweb3](https://bringweb3.io/#contact)
 - Provide a specific logo for the specific outlet
 
@@ -38,19 +38,19 @@ When a user visits supported online retailer websites, the Crypto Cashback syste
 ### Package
 Using npm:
 ```bash
-$ npm install @bringweb3/chrome-extension-kit
+$ npm install @yoroi-classic/bringweb3-chrome-extension-kit
 ```
 
 Using yarn:
 
 ```bash
-$ yarn add @bringweb3/chrome-extension-kit
+$ yarn add @yoroi-classic/bringweb3-chrome-extension-kit
 ```
 
 Using pnpm:
 
 ```bash
-$ pnpm add @bringweb3/chrome-extension-kit
+$ pnpm add @yoroi-classic/bringweb3-chrome-extension-kit
 ```
 
 ### Manifest
@@ -82,17 +82,17 @@ Once the package is installed, you can import the library using `import` or `req
 
 ### import
 ```js
-import { bringInitBackground } from '@bringweb3/chrome-extension-kit';
+import { bringInitBackground } from '@yoroi-classic/bringweb3-chrome-extension-kit';
 ```
 ```js
-import { bringInitContentScript } from '@bringweb3/chrome-extension-kit';
+import { bringInitContentScript } from '@yoroi-classic/bringweb3-chrome-extension-kit';
 ```
 ### require
 ```js
-const { bringInitBackground } = require('@bringweb3/chrome-extension-kit');
+const { bringInitBackground } = require('@yoroi-classic/bringweb3-chrome-extension-kit');
 ```
 ```js
-const { bringInitContentScript } = require('@bringweb3/chrome-extension-kit');
+const { bringInitContentScript } = require('@yoroi-classic/bringweb3-chrome-extension-kit');
 ```
 
 ## Example
@@ -101,7 +101,7 @@ const { bringInitContentScript } = require('@bringweb3/chrome-extension-kit');
 
 ```js
 
-import { bringInitBackground } from '@bringweb3/chrome-extension-kit';
+import { bringInitBackground } from '@yoroi-classic/bringweb3-chrome-extension-kit';
 
 bringInitBackground({
     identifier: process.env.PLATFORM_IDENTIFIER, // The identifier key you obtained from Bringweb3
@@ -113,7 +113,7 @@ bringInitBackground({
 ### contentScript.js
 
 ```js 
-import { bringInitContentScript } from "@bringweb3/chrome-extension-kit";
+import { bringInitContentScript } from "@yoroi-classic/bringweb3-chrome-extension-kit";
 
 bringInitContentScript({
     getWalletAddress: async () => await new Promise(resolve => setTimeout(() => resolve('<USER_WALLET_ADDRESS>'), 200)),// Async function that returns the current user's wallet address
@@ -222,7 +222,7 @@ bringInitContentScript({
 ```
 ### Turnoff settings 
 ```javascript
-import { getTurnOff, setTurnOff } from "@bringweb3/chrome-extension-kit";
+import { getTurnOff, setTurnOff } from "@yoroi-classic/bringweb3-chrome-extension-kit";
 
 // Get state example
 const current = await getTurnOff()
