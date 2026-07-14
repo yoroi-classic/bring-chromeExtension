@@ -30,8 +30,8 @@ const set = async (key: string, value: any, useCache: boolean = true) => {
 // ***** IMPORTANT BEGIN ***** //
 
 /*
- This is Emurgo local change. We had a weird case reported by Bring
- when they received string "light" instead of an address in API calls.
+ We had a weird case reported by Bring when they received string "light"
+ instead of an address in API calls.
  We have no understanding so far what is the root cause of this,
  but it seems like some users might have had that string
  stored in their local storage instead of a valid address.

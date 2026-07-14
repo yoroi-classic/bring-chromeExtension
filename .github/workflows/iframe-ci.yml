@@ -1,16 +1,16 @@
-name: CI-SDK
+name: CI-Iframe
 
 on:
   push:
     paths:
-      - 'extension-files/bringweb3-sdk/**'
+      - 'iframe-frontend/**'
+      - '.github/workflows/iframe-ci.yml'
     branches:
       - "**"
   pull_request:
     paths:
-      - 'extension-files/bringweb3-sdk/**'
-      - 'extension-files/test-extension/**'
-      - '.github/workflows/main.yml'
+      - 'iframe-frontend/**'
+      - '.github/workflows/iframe-ci.yml'
 
 permissions:
   contents: read
@@ -23,23 +23,17 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: extension-files/bringweb3-sdk
+        working-directory: iframe-frontend
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: "yarn"
-          cache-dependency-path: '**/yarn.lock'
+          cache-dependency-path: 'iframe-frontend/yarn.lock'
       - name: Enable Corepack
         run: corepack enable
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-      - name: Lint and smoke test package
-        run: yarn verify
-      - name: Install mock extension dependencies
-        working-directory: extension-files/test-extension
-        run: yarn install --frozen-lockfile
-      - name: Validate and build mock extension
-        working-directory: extension-files/test-extension
+      - name: Validate, lint, and build
         run: yarn verify
