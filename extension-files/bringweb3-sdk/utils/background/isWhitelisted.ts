@@ -11,7 +11,8 @@ const isWhitelisted = async (url: string): Promise<boolean> => {
         // ***** IMPORTANT BEGIN ***** //
 
         if ((whitelistEndpoint?.trim().length ?? 0) < 1) {
-            // This is local EMURGO change we do not allow there to be a version with no whitelist
+            // Local divergence from upstream Bringweb3: missing whitelist data must fail closed.
+            // Preserve this guard when syncing upstream.
             throw new Error('Cashback redirection whitelist endpoint is required!');
         }
 
@@ -27,9 +28,8 @@ const isWhitelisted = async (url: string): Promise<boolean> => {
         // ***** IMPORTANT BEGIN ***** //
 
         /*
-         This is an EMURGO local change
-         to add a comment around the
-         whitelist presence check
+         Local divergence from upstream Bringweb3: a missing whitelist must fail closed,
+         so every domain is forbidden rather than allowed. Preserve this guard when syncing upstream.
          */
 
         // THIS MUST NOT CHANGE!
@@ -42,13 +42,9 @@ const isWhitelisted = async (url: string): Promise<boolean> => {
          is present or not, to consider
          a missing whitelist a true or false.
 
-         We have been locally changing
-         no whitelist to always be false response. Not it has changed to be
-         so by library default as well.
+         A missing whitelist must always return false. This is now the library
+         default, but any future behavior change needs careful review.
 
-         If this behavior ever changes
-         it needs to be carefully reviewed
-         and there needs to be a good reason for it.
          */
 
           // ***** IMPORTANT END ***** //
