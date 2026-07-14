@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const common = require('./webpack.common.js');
 const PATHS = require('./paths');
 const webpack = require('webpack');
+const path = require('path');
 
 // Merge webpack configuration files
 const config = merge(common, {
@@ -17,6 +18,11 @@ const config = merge(common, {
   },
   watchOptions: {
     ignored: /node_modules\/(?!@bringweb3\/sdk)/,
+  },
+  resolve: {
+    alias: {
+      '@yoroi-classic/bringweb3-chrome-extension-kit': path.resolve(__dirname, '../../bringweb3-sdk/dist/index.js'),
+    },
   },
   plugins: [
     new HtmlWebpackPlugin([{

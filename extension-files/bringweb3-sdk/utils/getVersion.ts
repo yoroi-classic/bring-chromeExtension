@@ -3,10 +3,8 @@ import { ENV_VERSION } from './config'
 
 const getVersion = (): string => {
     /*
-     This is Emurgo local change.
-     When we make local fork fixes we publish them with version like N.N.N-fix.N
-     But Bring backend depends on receiving an expected version number to respond correctly.
-     This split by `-` cuts off the `-fix.N` part and leaves the "official" version number only.
+     Local fork fixes are published with versions like N.N.N-fix.N, but the
+     Bring backend expects the base version number to respond correctly.
 
      This means local fork versions MUST always match something like <LAST_OFFICIAL_VERSION>-fix.N
      */
